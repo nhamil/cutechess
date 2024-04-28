@@ -20,7 +20,6 @@
 #include <QPainter> 
 #include <QSvgRenderer>
 
-
 GraphicsPiece::GraphicsPiece(const Chess::Piece& piece,
 			     qreal squareSize,
 			     const QString& elementId,
@@ -86,7 +85,11 @@ bool GraphicsPiece::isFlipped() const
 
 void GraphicsPiece::setFlipped(bool flipped) 
 {
-	m_flipped = flipped; 
+	if (m_flipped != flipped) 
+	{
+		m_flipped = flipped; 
+		if (m_flippable) update(); 
+	}
 }
 
 Chess::Piece GraphicsPiece::pieceType() const
