@@ -126,7 +126,7 @@ void EvalHistory::addData(int ply, int score)
 	int base = m_invertSides ? 1 : 0;
 	int side = (ply % 2 == base) ? 0 : 1;
 	double x = double(ply + 2) / 2;
-	double y = qBound(-15.0, double(score) / 100.0, 15.0);
+	double y = qBound(-100.0, double(score) / 100.0, 100.0);
 	if (side == 1)
 		y = -y;
 
