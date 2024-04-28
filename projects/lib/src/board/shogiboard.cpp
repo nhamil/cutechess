@@ -35,21 +35,21 @@ ShogiBoard::ShogiBoard()
 	m_checks{0,0},
 	m_history()
 {
-	setPieceType(Pawn, tr("pawn"), "P");
-	setPieceType(Lance, tr("lance"), "L", LanceMovement, "M");
-	setPieceType(Knight, tr("knight"), "N", KnightMovement);
-	setPieceType(SilverGeneral, tr("silver"), "S", SilverMovement, "E");
-	setPieceType(GoldGeneral, tr("gold"), "G", GoldMovement, "W");
-	setPieceType(Bishop, tr("bishop"), "B", BishopMovement);
-	setPieceType(Rook, tr("rook"), "R", RookMovement);
-	setPieceType(King, tr("king"), "K");
+	setPieceType(Pawn, tr("pawn"), "P", 0, "SP", true);
+	setPieceType(Lance, tr("lance"), "L", LanceMovement, "SM", true);
+	setPieceType(Knight, tr("knight"), "N", KnightMovement, "SN", true);
+	setPieceType(SilverGeneral, tr("silver"), "S", SilverMovement, "SE", true);
+	setPieceType(GoldGeneral, tr("gold"), "G", GoldMovement, "SW", true);
+	setPieceType(Bishop, tr("bishop"), "B", BishopMovement, "SB", true);
+	setPieceType(Rook, tr("rook"), "R", RookMovement, "SR", true);
+	setPieceType(King, tr("king"), "K", 0, "SK", true);
 
-	setPieceType(PromotedPawn, tr("tokin"), "+P", GoldMovement, "W");
-	setPieceType(PromotedLance, tr("promoted lance"), "+L", GoldMovement, "W");
-	setPieceType(PromotedKnight, tr("promoted knight"), "+N", GoldMovement, "N~");
-	setPieceType(PromotedSilver, tr("promoted silver"), "+S", GoldMovement, "W");
-	setPieceType(PromotedBishop, tr("horse"), "+B", BishopMovement | WazirMovement, "B~");
-	setPieceType(PromotedRook, tr("dragon"), "+R", RookMovement | FerzMovement, "R~");
+	setPieceType(PromotedPawn, tr("tokin"), "+P", GoldMovement, "SP~", true);
+	setPieceType(PromotedLance, tr("promoted lance"), "+L", GoldMovement, "SM~", true);
+	setPieceType(PromotedKnight, tr("promoted knight"), "+N", GoldMovement, "SN~", true);
+	setPieceType(PromotedSilver, tr("promoted silver"), "+S", GoldMovement, "SE~", true);
+	setPieceType(PromotedBishop, tr("horse"), "+B", BishopMovement | WazirMovement, "SB~", true);
+	setPieceType(PromotedRook, tr("dragon"), "+R", RookMovement | FerzMovement, "SR~", true);
 }
 
 Board* ShogiBoard::copy() const

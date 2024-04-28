@@ -142,7 +142,8 @@ void Board::setPieceType(int type,
 			 const QString& name,
 			 const QString& symbol,
 			 unsigned movement,
-			 const QString& gsymbol)
+			 const QString& gsymbol, 
+			 bool flippable)
 {
 	if (type >= m_pieceData.size())
 		m_pieceData.resize(type + 1);
@@ -150,7 +151,7 @@ void Board::setPieceType(int type,
 	const QString& graphicalSymbol = gsymbol.isEmpty() ? symbol : gsymbol;
 
 	PieceData data =
-		{ name, symbol.toUpper(), movement, graphicalSymbol.toUpper() };
+		{ name, symbol.toUpper(), movement, graphicalSymbol.toUpper(), flippable };
 	m_pieceData[type] = data;
 }
 
@@ -206,6 +207,14 @@ QString Board::representation(Piece piece) const
 	if (piece.side() == upperCaseSide())
 		return m_pieceData[type].representation;
 	return m_pieceData[type].representation.toLower();
+}
+		
+bool Board::pieceIsFlippable(Piece piece) const 
+{
+	int type = piece.type();
+	if (type <= 0 || type >= m_pieceData.size())
+		return false; 
+	return m_pieceData[type].flippable; 
 }
 
 int Board::reserveType(int pieceType) const

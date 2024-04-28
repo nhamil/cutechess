@@ -53,6 +53,7 @@ class GraphicsPiece : public QGraphicsObject
 		GraphicsPiece(const Chess::Piece& piece,
 			      qreal squareSize,
 			      const QString& elementId,
+			      bool flippable, 
 			      QSvgRenderer* renderer,
 			      QGraphicsItem* parent = nullptr);
 
@@ -75,6 +76,10 @@ class GraphicsPiece : public QGraphicsObject
 		QGraphicsItem* container() const;
 		/*! Sets the container to \a item. */
 		void setContainer(QGraphicsItem* item);
+		/*! Returns whether the piece should be flipped vertically */
+		bool isFlipped() const;  
+		/*! Sets the piece flip status */
+		void setFlipped(bool flipped); 
 
 	public slots:
 		/*!
@@ -93,6 +98,8 @@ class GraphicsPiece : public QGraphicsObject
 		QString m_elementId;
 		QSvgRenderer* m_renderer;
 		QGraphicsItem* m_container;
+		bool m_flipped; 
+		bool m_flippable; 
 };
 
 #endif // GRAPHICSPIECE_H

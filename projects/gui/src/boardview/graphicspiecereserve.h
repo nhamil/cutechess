@@ -72,6 +72,14 @@ class GraphicsPieceReserve : public QGraphicsItem
 		 * This object becomes the parent item and container of \a piece.
 		 */
 		void addPiece(GraphicsPiece* piece);
+		/*!
+		 * Returns whether or not reserve pieces are flipped. 
+		 */ 
+		bool isFlipped() const; 
+		/*!
+		 * Sets the piece flip mode to \a flipped. 
+		 */ 
+		void setFlipped(bool flipped); 
 
 	private:
 		QPointF piecePos(Chess::Side side, int index) const;
@@ -86,6 +94,7 @@ class GraphicsPieceReserve : public QGraphicsItem
 		PieceMap m_pieces;
 		int m_rowCount;
 		QList<Chess::Piece> m_tiles[2];
+		bool m_flipped; 
 };
 
 #endif // GRAPHICSPIECERESERVE_H

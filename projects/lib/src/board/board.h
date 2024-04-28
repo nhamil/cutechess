@@ -227,6 +227,8 @@ class LIB_EXPORT Board
 		QString pieceString(int pieceType) const;
 		/*! Returns symbol for graphical representation of \a piece. */
 		QString representation(Piece piece) const;
+		/*! Returns whether \a piece should be flippable. */
+		bool pieceIsFlippable(Piece piece) const;
 
 		/*!
 		 * Makes a chess move on the board.
@@ -324,12 +326,16 @@ class LIB_EXPORT Board
 		 *        piece can make.
 		 * \param gsymbol Select the piece's graphical representation.
 		 *	  If not set the \a symbol will be used (default).
+		 * \param flippable Set to true if pieces themselves should be 
+		 *        flipped when the board is flipped. 
 		 */
 		void setPieceType(int type,
 				  const QString& name,
 				  const QString& symbol,
 				  unsigned movement = 0,
-				  const QString & gsymbol = QString());
+				  const QString & gsymbol = QString(), 
+				  bool flippable = false);
+
 		/*! Returns true if \a piece on \a square can capture like \a movement. */
 		virtual bool pieceHasCaptureMovement(Piece piece, int square, unsigned movement) const;
 		/*! Returns true if \a piece on \a square can move like \a movement. */
@@ -527,6 +533,7 @@ class LIB_EXPORT Board
 			QString symbol;
 			unsigned movement;
 			QString representation;
+			bool flippable; 
 		};
 		struct MoveData
 		{

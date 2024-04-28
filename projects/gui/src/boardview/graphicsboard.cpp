@@ -249,6 +249,7 @@ void GraphicsBoard::setSquare(const Chess::Square& square, GraphicsPiece* piece)
 	else
 	{
 		m_squares[index] = piece;
+		piece->setFlipped(m_flipped); 
 		piece->setContainer(this);
 		piece->setParentItem(this);
 		piece->setPos(squarePos(square));
@@ -329,5 +330,9 @@ void GraphicsBoard::setFlipped(bool flipped)
 
 	clearHighlights();
 	m_flipped = flipped;
+	for (auto* sq : m_squares) 
+	{
+		if (sq) sq->setFlipped(flipped); 
+	}
 	update();
 }

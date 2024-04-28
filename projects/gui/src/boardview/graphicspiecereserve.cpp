@@ -20,19 +20,46 @@
 #include <QPainter>
 #include "graphicspiece.h"
 
-
 GraphicsPieceReserve::GraphicsPieceReserve(qreal squareSize,
 					   QGraphicsItem* parent)
 	: QGraphicsItem(parent),
 	  m_tileWidth(squareSize * 1.5),
 	  m_tileHeight(squareSize),
-	  m_rowCount(1)
+	  m_rowCount(1), 
+	  m_flipped(false)
 {
 	m_rect.setWidth(m_tileWidth * 2);
 	m_rect.setHeight(m_tileHeight);
 	m_rect.moveCenter(QPointF(0, 0));
 
 	setCacheMode(DeviceCoordinateCache);
+}
+
+bool GraphicsPieceReserve::isFlipped() const 
+{
+	return m_flipped; 
+}
+
+void GraphicsPieceReserve::setFlipped(bool flipped) 
+{
+	m_flipped = flipped; 
+	for (int i = 0; i < 2; i++)
+	{
+		const QList<Chess::Piece>& list(m_tiles[i]);
+		for (int j = 0; j < list.size(); j++)
+		{
+			Chess::Piece pc = list.at(j); 
+			for (auto* gpc : m_pieces.values(pc)) 
+			{
+				if (gpc) 
+				{
+					gpc->setFlipped(flipped); 
+					gpc->update(); 
+				}
+			}
+		}
+	}
+	updateTiles();
 }
 
 int GraphicsPieceReserve::type() const
@@ -120,6 +147,7 @@ void GraphicsPieceReserve::addPiece(GraphicsPiece* piece)
 	GraphicsPiece* old = m_pieces.value(type);
 
 	m_pieces.insert(type, piece);
+	piece->setFlipped(m_flipped); 
 	piece->setContainer(this);
 	piece->setParentItem(this);
 

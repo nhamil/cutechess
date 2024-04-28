@@ -194,6 +194,7 @@ void BoardScene::flip()
 {
 	stopAnimation();
 	m_squares->setFlipped(!m_squares->isFlipped());
+	if (m_reserve) m_reserve->setFlipped(!m_reserve->isFlipped());
 
 	QParallelAnimationGroup* group = new QParallelAnimationGroup;
 	m_anim = group;
@@ -424,6 +425,7 @@ GraphicsPiece* BoardScene::createPiece(const Chess::Piece& piece)
 	return new GraphicsPiece(piece,
 				 s_squareSize,
 				 m_board->representation(piece),
+				 m_board->pieceIsFlippable(piece), 
 				 m_renderer);
 }
 

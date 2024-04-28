@@ -17,12 +17,14 @@
 */
 
 #include "graphicspiece.h"
+#include <QPainter> 
 #include <QSvgRenderer>
 
 
 GraphicsPiece::GraphicsPiece(const Chess::Piece& piece,
 			     qreal squareSize,
 			     const QString& elementId,
+			     bool flippable, 
 			     QSvgRenderer* renderer,
 			     QGraphicsItem* parent)
 	: QGraphicsObject(parent),
@@ -31,7 +33,9 @@ GraphicsPiece::GraphicsPiece(const Chess::Piece& piece,
 		  squareSize, squareSize),
 	  m_elementId(elementId),
 	  m_renderer(renderer),
-	  m_container(nullptr)
+	  m_container(nullptr), 
+	  m_flipped(false), 
+	  m_flippable(flippable)
 {
 	setAcceptedMouseButtons(Qt::LeftButton);
 	setCacheMode(DeviceCoordinateCache);
@@ -70,7 +74,19 @@ void GraphicsPiece::paint(QPainter* painter,
 	}
 	bounds.moveCenter(m_rect.center());
 
+	if (m_flippable && m_flipped) painter->rotate(180); 
 	m_renderer->render(painter, m_elementId, bounds);
+	if (m_flippable && m_flipped) painter->rotate(-180); 
+}
+
+bool GraphicsPiece::isFlipped() const 
+{
+	return m_flipped; 
+}
+
+void GraphicsPiece::setFlipped(bool flipped) 
+{
+	m_flipped = flipped; 
 }
 
 Chess::Piece GraphicsPiece::pieceType() const
