@@ -8,11 +8,13 @@
 
 
 PieceChooser::PieceChooser(const QList<GraphicsPiece*>& pieces,
-			   qreal squareSize,
+			   qreal squareSize, 
+			   bool flipped, 
 			   QGraphicsItem* parent)
 	: QGraphicsObject(parent),
 	  m_squareSize(squareSize),
-	  m_anim(nullptr)
+	  m_anim(nullptr),
+	  m_flipped(flipped) 
 {
 	for (auto piece : pieces)
 		if (piece != nullptr)
@@ -27,6 +29,8 @@ PieceChooser::PieceChooser(const QList<GraphicsPiece*>& pieces,
 
 	setFlag(QGraphicsItem::ItemDoesntPropagateOpacityToChildren);
 	hide();
+
+	updatePieceFlip(); 
 }
 
 int PieceChooser::type() const
@@ -59,6 +63,35 @@ void PieceChooser::cancelChoice()
 {
 	emit pieceChosen(Chess::Piece());
 	destroy();
+}
+
+bool PieceChooser::isFlipped() const 
+{
+	return m_flipped; 
+}
+
+void PieceChooser::setFlipped(bool flipped) 
+{
+	if (flipped == m_flipped) 
+		return; 
+
+	m_flipped = flipped; 
+	updatePieceFlip(); 
+}
+
+void PieceChooser::updatePieceFlip()
+{
+	for (int i = 0; i < 2; i++) 
+	{
+		if (m_pieces[i].isEmpty()) 
+			continue; 
+
+		for (int j = 0; j < m_pieces[i].size(); j++) 
+		{
+			GraphicsPiece* piece = m_pieces[i].at(j); 
+			piece->setFlipped(m_flipped); 
+		}
+	}
 }
 
 void PieceChooser::reveal()

@@ -195,6 +195,7 @@ void BoardScene::flip()
 	stopAnimation();
 	m_squares->setFlipped(!m_squares->isFlipped());
 	if (m_reserve) m_reserve->setFlipped(!m_reserve->isFlipped());
+	if (m_chooser) m_chooser->setFlipped(!m_chooser->isFlipped()); 
 
 	QParallelAnimationGroup* group = new QParallelAnimationGroup;
 	m_anim = group;
@@ -518,7 +519,7 @@ void BoardScene::selectPiece(const QList<Chess::Piece>& types,
 	for (const auto& type : types)
 		list << createPiece(type);
 
-	m_chooser = new PieceChooser(list, s_squareSize);
+	m_chooser = new PieceChooser(list, s_squareSize, m_squares->isFlipped());
 	connect(m_chooser, SIGNAL(pieceChosen(Chess::Piece)), this, member);
 	addItem(m_chooser);
 	m_chooser->reveal();

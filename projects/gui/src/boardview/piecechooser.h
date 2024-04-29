@@ -54,6 +54,7 @@ class PieceChooser : public QGraphicsObject
 		 */
 		PieceChooser(const QList<GraphicsPiece*>& pieces,
 			     qreal squareSize,
+			     bool flipped, 
 			     QGraphicsItem* parent = nullptr);
 
 		// Inherited from QGraphicsObject
@@ -65,6 +66,15 @@ class PieceChooser : public QGraphicsObject
 
 		/*! Chooses a null piece and destroys the object. */
 		void cancelChoice();
+
+		/*!
+		 * Returns true if the piece chooser is flipped, otherwise 
+		 * returns false.
+		 */ 
+		bool isFlipped() const; 
+
+		/*! Sets piece chooser flipping to \a flipped. */ 
+		void setFlipped(bool flipped); 
 
 	public slots:
 		/*! Reveals the dialog with an animation. */
@@ -88,10 +98,14 @@ class PieceChooser : public QGraphicsObject
 		virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 	private:
+		/*! Sets piece flipping to the chooser's flipping status. */ 
+		void updatePieceFlip(); 
+
 		qreal m_squareSize;
 		QRectF m_rect;
 		QList<GraphicsPiece*> m_pieces[2];
 		QAbstractAnimation* m_anim;
+		bool m_flipped; 
 };
 
 #endif // PIECECHOOSER_H

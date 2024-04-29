@@ -126,8 +126,7 @@ class GraphicsBoard : public QGraphicsItem
 		void setHighlights(const QList<Chess::Square>& squares);
 
 		/*!
-		 * Returns true if the board is flipped;
-		 * otherwise returns false.
+		 * Returns true if the board is flipped, otherwise returns false.
 		 */
 		bool isFlipped() const;
 
